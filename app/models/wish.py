@@ -47,9 +47,9 @@ class Wish(models.Model):
     priority = models.IntegerField(
         verbose_name='優先度',
         choices=(
-            (1, '低い'),
+            (1, '低'),
             (2, '普通'),
-            (3, '高い'),
+            (3, '高'),
         ),
         default=2,
     )
