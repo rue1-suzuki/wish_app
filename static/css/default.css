@@ -55,12 +55,20 @@ html {
   }
   
   input, select {
+    margin: 1rem 0rem;
     font-size: 1rem;
     height: 2rem;
   }
   
   input[type="submit"] {
-    margin: 1rem;
     width: 5rem;
   }
   
+  ul {
+    padding-left: 0rem;
+  }
+  
+  li {
+    list-style-type: none;
+    margin: 1rem;
+  }
