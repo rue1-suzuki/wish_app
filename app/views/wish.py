@@ -35,7 +35,35 @@ class List(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         query = super().get_queryset()
-        query = query.filter(user=self.request.user)
+        query = query.filter(
+            user=self.request.user).order_by(
+                'buy_date', 'expected_buy_date',)
+
+        # 購入予定日 == 今日
+        flag = self.request.GET.get('flag', False)
+        if flag == 'today':
+            query = query.filter(expected_buy_date=timezone.now())
+
+        # 購入日
+        year = self.request.GET.get('year', False)
+        month = self.request.GET.get('month', False)
+        day = self.request.GET.get('day', False)
+        if year:
+            query = query.filter(buy_date__year=year)
+        if month:
+            query = query.filter(buy_date__month=month)
+        if day:
+            query = query.filter(buy_date__day=day)
+
+        # 未購入、購入済み
+        is_buy = self.request.GET.get('is_buy', None)
+        if is_buy in ['true', 'True', ]:
+            query = query.exclude(buy_date=None)
+        elif is_buy in ['false', 'False', ]:
+            query = query.filter(buy_date=None)
+        else:
+            pass
+
         return query
 
 
