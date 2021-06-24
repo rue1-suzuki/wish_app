@@ -14,7 +14,7 @@
     </tr>
     <tr>
         <th>店名</th>
-        <td>{{ wish.shopname }}</td>
+        <td>{{ wish.shopname | default_if_none:'未定' }}</td>
     </tr>
     <tr>
         <th>価格</th>

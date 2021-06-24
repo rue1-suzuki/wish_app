@@ -6,20 +6,25 @@
 <table>
     <tr>
         <th>商品名</th>
-        <th>価格</th>
-        <th>個数</th>
-        <th>購入日</th>
         <th>優先度</th>
+        <th>購入予定日</th>
+        <th>購入日</th>
     </tr>
     {% for wish in wish_list %}
     <tr>
         <th>
             <a href="{% url 'app:wish_detail' wish.pk %}">
-                {{ wish.title }}
+                {{ wish.title | truncatechars:8 }}
             </a>
         </th>
-        <td>{{ wish.price }}</td>
-        <td>{{ wish.count }}</td>
+        <td>{{ wish.get_priority_display }}</td>
+        <td>
+            {% if wish.expected_buy_date %}
+            {{ wish.expected_buy_date }}
+            {% else %}
+            未定
+            {% endif %}
+        </td>
         <td>
             {% if wish.buy_date %}
             {{ wish.buy_date }}
@@ -30,7 +35,6 @@
             </form>
             {% endif %}
         </td>
-        <td>{{ wish.get_priority_display }}</td>
     </tr>
     {% empty %}
     <tr>
