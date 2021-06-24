@@ -1,0 +1,53 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BREAKERZ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/default.css' %}">
+</head>
+
+<body>
+    <header>
+        {% block header %}
+        <h1><a href="{% url 'app:wish_list' %}">BREAKERZ</a></h1>
+
+        {% if request.user.is_authenticated %}
+        <p>
+            ログイン中：
+            <a href="{% url 'app:user_detail' request.user.pk %}">
+                {{ request.user.username }}
+            </a>
+            さん /
+            <a href="{% url 'app:wish_create' %}">Wish新規作成</a>
+        </p>
+        {% endif %}
+        {% endblock %}
+    </header>
+
+    <main>
+        {% block contents %}
+        no contents
+        {% endblock %}
+    </main>
+
+    <footer>
+        {% block footer %}
+        {% if request.user.is_authenticated %}
+        <p>
+            ログイン中：
+            <a href="{% url 'app:user_detail' request.user.pk %}">
+                {{ request.user.username }}
+            </a>
+            さん /
+            <a href="{% url 'logout' %}">ログアウト</a>
+        </p>
+        {% endif %}
+        <p>Created by Django</p>
+        {% endblock %}
+    </footer>
+</body>
+
+</html>

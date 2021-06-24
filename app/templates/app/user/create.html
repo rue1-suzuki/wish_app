@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+<h2>User新規作成</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <table>
+
+        {{ form.as_table }}
+    </table>
+    <input type="submit">
+</form>
+{% endblock %}

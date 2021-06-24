@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+<h2>{{ wish_list | length }} 件のWish</h2>
+
+<table>
+    <tr>
+        <th>商品名</th>
+        <th>価格</th>
+        <th>個数</th>
+        <th>購入日</th>
+        <th>優先度</th>
+    </tr>
+    {% for wish in wish_list %}
+    <tr>
+        <th>
+            <a href="{% url 'app:wish_detail' wish.pk %}">
+                {{ wish.title }}
+            </a>
+        </th>
+        <td>{{ wish.price }}</td>
+        <td>{{ wish.count }}</td>
+        <td>
+            {% if wish.buy_date %}
+            {{ wish.buy_date }}
+            {% else %}
+            <form method="POST" action="{% url 'app:wish_switch_is_buy' wish.pk %}">
+                {% csrf_token %}
+                <button type="submit">購入済にする</button>
+            </form>
+            {% endif %}
+        </td>
+        <td>{{ wish.get_priority_display }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="5">該当するWishがありません。</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

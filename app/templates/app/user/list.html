@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+<h2>{{ user_list | length }} 人のUser</h2>
+
+<table>
+    <tr>
+        <th>ユーザ名</th>
+        <th>作成日時</th>
+    </tr>
+    {% for user in user_list %}
+    <tr>
+        <td>
+            <a href="{% url 'app:user_detail' user.pk %}">
+                {{ user.username }}
+            </a>
+        </td>
+        <td>
+            {{ user.date_joined | date }}<br>
+            {{ user.date_joined | time }}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

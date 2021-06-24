@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+<h2>ログイン</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <input type="submit">
+</form>
+
+<p>
+    ユーザ新規作成は<a href="{% url 'app:user_create' %}">こちら</a>
+</p>
+{% endblock %}

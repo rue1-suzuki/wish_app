@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+<h2>{{ wish.title }} の詳細</h2>
+
+<table>
+    <tr>
+        <th>商品名</th>
+        <td>
+            <a href="{% url 'app:wish_detail' wish.pk %}">
+                {{ wish.title }}
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <th>店名</th>
+        <td>{{ wish.shopname }}</td>
+    </tr>
+    <tr>
+        <th>価格</th>
+        <td>{{ wish.price }} 円</td>
+    </tr>
+    <tr>
+        <th>個数</th>
+        <td>{{ wish.count }} 個</td>
+    </tr>
+    <tr>
+        <th>状態</th>
+        <td>
+            {% if wish.buy_date %}
+            購入済
+            {% else %}
+            未購入
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <th>購入予定日</th>
+        <td>{{ wish.expected_buy_date | default_if_none:'未定' }}</td>
+    </tr>
+    <tr>
+        <th>購入日</th>
+        <td>
+            {% if wish.buy_date %}
+            {{ wish.buy_date }}
+            {% else %}
+            <form method="POST" action="{% url 'app:wish_switch_is_buy' wish.pk %}">
+                {% csrf_token %}
+                <button type="submit">購入済にする</button>
+            </form>
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <th>優先度</th>
+        <td>{{ wish.get_priority_display }}</td>
+    </tr>
+    <tr>
+        <th>作成日時</th>
+        <td>
+            {{ wish.created_at | date }}<br>
+            {{ wish.created_at | time }}
+        </td>
+    </tr>
+    <tr>
+        <th>更新日時</th>
+        <td>
+            {{ wish.updated_at | date }}<br>
+            {{ wish.updated_at | time }}
+        </td>
+    </tr>
+</table>
+
+<p>
+    <a href="{% url 'app:wish_update' wish.pk %}">このWishを編集する</a> /
+    <a href="{% url 'app:wish_delete' wish.pk %}">このWishを削除する</a>
+</p>
+{% endblock %}

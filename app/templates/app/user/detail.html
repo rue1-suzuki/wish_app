@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+<h2>
+    <a href="{% url 'app:user_detail' request.user.pk %}">
+        {{ user.username }}
+    </a> の詳細
+</h2>
+
+<p>
+    <a href="{% url 'app:user_update' user.pk %}">ユーザ情報を編集する</a> /
+    <a href="{% url 'app:user_delete' user.pk %}">このユーザを削除する</a>
+</p>
+
+<table>
+    <tr>
+        <th>ユーザ名</th>
+        <td>{{ user.username }}</td>
+    </tr>
+    <tr>
+        <th>最終ログイン日時</th>
+        <td>
+            {{ user.last_login | date }}<br>
+            {{ user.last_login | time }}
+        </td>
+    </tr>
+    <tr>
+        <th>ユーザ作成日時</th>
+        <td>
+            {{ user.date_joined | date }}<br>
+            {{ user.date_joined | time }}
+        </td>
+    </tr>
+</table>
+{% endblock %}
